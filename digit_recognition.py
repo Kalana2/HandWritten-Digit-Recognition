@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 import cv2
 import joblib
 
+
 height = 800
 width = 800
 count = 0
@@ -22,7 +23,7 @@ model = joblib.load("KNN-digit_recongnition.sav")
 def eventFunction(point):
     x1 = point.x - 45
     x2 = point.x + 45
-    y1 = point.y - 45
+    y1 = point.y -
     y2 = point.y + 45
 
     canvas.create_oval((x1, y1, x2, y2), fill="green2", outline="")
