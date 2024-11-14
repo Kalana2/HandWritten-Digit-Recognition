@@ -9,6 +9,7 @@ height = 800
 width = 800
 count = 0
 
+
 # main Window
 window = tk.Tk()
 
@@ -19,10 +20,10 @@ imageDraw = ImageDraw.Draw(image)
 model = joblib.load("KNN-digit_recongnition.sav")
 
 def eventFunction(point):
-    x1 = point.x - 25
-    x2 = point.x + 25
-    y1 = point.y - 25
-    y2 = point.y + 25
+    x1 = point.x - 45
+    x2 = point.x + 45
+    y1 = point.y - 45
+    y2 = point.y + 45
 
     canvas.create_oval((x1, y1, x2, y2), fill="green2", outline="")
     imageDraw.ellipse((x1, y1, x2, y2), fill="white")
@@ -52,8 +53,18 @@ def predict():
 
     imageArry = np.array(image)
     imageArry = cv2.cvtColor(imageArry, cv2.COLOR_RGB2GRAY)
-    imageArry = cv2.resize(imageArry, (8, 8))
-    imageArry = imageArry.reshape(1, 64)
+
+    contours, _ = cv2.findContours(imageArry, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if contours:
+        x, y, w, h = cv2.boundingRect(contours[0]) 
+        imageArry = imageArry[y:y+h, x:x+w]
+
+    imageArry = cv2.resize(imageArry, (8, 8), interpolation=cv2.INTER_AREA)
+    imageArry = (imageArry / 255.0)*15
+
+    imageArry = imageArry.reshape(1, -1)# (1, 64)
+    
+
     predictedTarget = model.predict(imageArry)
     # print(predictedTarget)
 
