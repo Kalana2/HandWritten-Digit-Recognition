@@ -1,5 +1,7 @@
 # Handwritten Digit Recognition using KNN 🎯🧠
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 This project is a simple and interactive handwritten digit recognition system built using:
 
 - Python 🐍
